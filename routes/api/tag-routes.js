@@ -54,6 +54,11 @@ router.put('/:id', (req, res) => {
     ,
     { where: { id: req.params.id } },
   ).then(data => res.json(data))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err)
+  }
+  );
 
   if (!data) {
 
@@ -62,13 +67,6 @@ router.put('/:id', (req, res) => {
   }
   res.json(data)
 })
-
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err)
-  }
-  );
-
 
 // delete on tag by its `id` value
 router.delete('/:id', (req, res) => {
