@@ -68,8 +68,11 @@ router.put('/:id', (req, res) => {
   res.json(data)
 })
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3a38e4bb431c783135980930ef05df70cf3b800e
 // delete on tag by its `id` value
 router.delete('/:id', (req, res) => {
 
