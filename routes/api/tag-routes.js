@@ -33,9 +33,9 @@ router.get('/:id', (req, res) => {
 
 // create a new tag
 router.post('/', (req, res) => {
-  Tag.create({
-    tag: req.body.category_name
-  }).then(data => res.json(data))
+  Tag.create(req.body)
+  
+  .then(data => res.status(200).json(data))
 
     .catch((err) => {
       console.log(err)
@@ -47,25 +47,23 @@ router.post('/', (req, res) => {
 
 // update a tag's name by its `id` value
 router.put('/:id', (req, res) => {
-  Tag.update(
-    {
-      tag_name: req.body.tag_name,
+  Tag.update(req.body,{ where: { id: req.params.id } })
+  
+  .then((data) => {
+    console.log(data)
+
+    if (!data) {
+
+      res.status(404).json({ message: 'No Tag found with that id!' })
+      return;
     }
-    ,
-    { where: { id: req.params.id } },
-  ).then(data => res.json(data))
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err)
-  }
-  );
-
-  if (!data) {
-
-    res.status(404).json({ message: 'No Tag found with that id!' })
-    return;
-  }
-  res.json(data)
+    res.json(data)
+  })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err)
+    }
+    );
 })
 
 // delete on tag by its `id` value
