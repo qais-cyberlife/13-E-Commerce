@@ -1,10 +1,15 @@
-const router = require('express').Router();
-const categoryRoutes = require('./category-routes');
-const productRoutes = require('./product-routes');
-const tagRoutes = require('./tag-routes');
+require('dotenv').config();
 
-router.use('/categories', categoryRoutes);
-router.use('/products', productRoutes);
-router.use('/tags', tagRoutes);
+const Sequelize = require('sequelize');
 
-module.exports = router;
+const sequelize = process.env.JAWSDB_URL
+  ? new Sequelize(process.env.JAWSDB_URL)
+  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PW, {
+      host: 'localhost',
+      dialect: 'mysql',
+      dialectOptions: {
+        decimalNumbers: true,
+      },
+    });
+
+module.exports = sequelize;
